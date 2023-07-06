@@ -13,17 +13,17 @@ public class Constant
     public const string BackgroundSoundState = "BACKGROUND_SOUND_STATE";
     public const string FXSoundState = "FX_SOUND_STATE";
     public const string VibrateState = "VIBRATE_STATE";
-    
+
     // Scene
     public const string LoadingScene = "LoadingScene";
     public const string GameplayScene = "GamePlayScene";
-    
+
     // Playfab
     public const string PlayfabLoginID = "PLAYFAB_LOGIN_ID";
     public const string PlayerID = "PLAYER_ID";
     public const string PlayerName = "PLAYER_NAME";
     public const string PlayerCountryCode = "PLAYER_COUNTRY_CODE";
-    
+
     // Firebase
     public const string UseLevelAbTesting = "USE_LEVEL_AB_TESTING";
     public const string LevelTurnONInterstitial = "LEVEL_TURN_ON_INTERSTITIAL";
@@ -38,6 +38,8 @@ public class Constant
     public const string ProgressAmount = "PROGRESS_AMOUNT";
     public const string UnlockItem = "UNLOCK_ITEM";
     public const string EquipItem = "EQUIP_ITEM";
+    public const string Point = "Point";
+    public const string Slot = "Slot";
 
 
 

@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Slot
+  - Point
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Slot
   - Water
   - UI
   - Wall

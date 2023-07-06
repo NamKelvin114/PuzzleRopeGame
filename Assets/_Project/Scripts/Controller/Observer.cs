@@ -36,5 +36,6 @@ public static class Observer
     public static Action<Level> SkipLevel;
     public static Action<Level> WinLevel;
     public static Action<Level> LoseLevel;
+    public static Action<float> OnFingerUp;
     #endregion
 }
