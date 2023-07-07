@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Slot
   - Point
+  - Rope
   layers:
   - Default
   - TransparentFX
