@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -11,47 +12,57 @@ public class Point : MonoBehaviour
     private Transform _currentSlotSelect;
     [SerializeField] private LayerMask checkWith;
     private Vector3 _currentPosi;
+    private float velocity;
+    private Vector3 prvious;
+    public bool canTouch { get; set; }
     private void OnEnable()
     {
-        Observer.OnFingerUp += UpdateCurrentPosi;
     }
     private void OnDisable()
     {
-        Observer.OnFingerUp -= UpdateCurrentPosi;
     }
     private void Start()
     {
+        canTouch = true;
         _currentPosi = transform.position;
         if (slotSelect != null)
         {
             _currentSlotSelect = slotSelect;
         }
     }
-    void UpdateCurrentPosi(float maxLength)
+    public void UpdateCurrentPosi(float maxLength)
     {
         if (slotSelect == null) return;
         var condition = slotSelect.gameObject.GetComponentInParent<ItemSlot>();
+        canTouch = false;
         if (condition.isCollide == false && (slotSelect.position - center.position).magnitude <= maxLength + transform.lossyScale.x / 2)
         {
-            Debug.Log("can");
-            transform.position = slotSelect.transform.position;
+            Movement(slotSelect.position);
             condition.isCollide = true;
-            _currentPosi = transform.position;
             _currentSlotSelect = slotSelect;
         }
         else
         {
-            transform.position = new Vector3(_currentPosi.x, _currentPosi.y, 0);
+            var newPosi = new Vector3(_currentSlotSelect.position.x, _currentSlotSelect.position.y, 0);
+            Movement(newPosi);
             slotSelect = _currentSlotSelect;
             slotSelect.gameObject.GetComponentInParent<ItemSlot>().isCollide = true;
         }
     }
+    void Movement(Vector3 destination)
+    {
+        transform.DOMove(destination, 0.3f).OnComplete((() =>
+        {
+            Observer.DoneMove?.Invoke();
+            canTouch = true;
+        }));
+    }
     public void SetCenter(Vector3 centerPosi)
     {
         center.position = centerPosi;
-        var s = _currentPosi - center.position;
+        var s = slotSelect.position - center.position;
         center.right = s;
-        transform.position = _currentPosi;
+        transform.position = slotSelect.position;
         if (slotSelect != null)
         {
             slotSelect.gameObject.GetComponentInParent<ItemSlot>().isCollide = false;
