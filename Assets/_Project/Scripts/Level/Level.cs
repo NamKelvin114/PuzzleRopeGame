@@ -21,6 +21,7 @@ public class Level : MonoBehaviour
     private bool _isFingerDown;
     private bool _isFingerDrag;
     private bool _isFingerUp;
+    private int _countRope;
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
 
@@ -51,6 +52,10 @@ public class Level : MonoBehaviour
         Observer.RopeCheck -= CheckCondition;
         Observer.DoneMove -= CheckRopeCollide;
     }
+    private void Start()
+    {
+        _countRope = ropeList.Count;
+    }
 
     void HandleFingerDown(Lean.Touch.LeanFinger finger)
     {
@@ -63,7 +68,6 @@ public class Level : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
             { //ADDED LAYER SELECTION
-                ropes.Clear();
                 if (hit.collider.gameObject.CompareTag(Constant.Point))
                 {
                     var checkPoint = hit.collider.gameObject.GetComponent<Point>();
@@ -130,8 +134,8 @@ public class Level : MonoBehaviour
             }
             else
             {
-                _isFingerUp = false;
-                SetFingerUp();
+                // _isFingerUp = false;
+                // SetFingerUp();
             }
         }
     }
@@ -147,10 +151,15 @@ public class Level : MonoBehaviour
     }
     void CheckRopeCollide()
     {
+        ropes.Clear();
         foreach (var rope in ropeList)
         {
-            var b = rope.rope.gameObject.AddComponent<BoxCollider>();
-            b.isTrigger = true;
+            if (rope.rope.GetComponent<Rope>().isDone == false)
+            {
+                var b = rope.rope.gameObject.AddComponent<MeshCollider>();
+                b.convex = true;
+                b.isTrigger = true;
+            }
         }
     }
     void CheckCondition(Rope rope)
@@ -158,7 +167,7 @@ public class Level : MonoBehaviour
         if (!ropes.Contains(rope))
         {
             ropes.Add(rope);
-            if (ropes.Count == ropeList.Count)
+            if (ropes.Count == _countRope)
             {
                 int count = 0;
                 foreach (var arope in ropes)
@@ -170,9 +179,16 @@ public class Level : MonoBehaviour
                             if (ropelist.rope.GetComponent<Rope>() == arope)
                             {
                                 ropelist.rope.stretchingScale = 0;
-                                ropelist.headOfRope.transform.DOMove(ropelist.tailOfRope.transform.position, 2);
+                                ropelist.rope.GetComponent<Rope>().isDone = true;
+                                ropelist.headOfRope.transform.DOMove(ropelist.tailOfRope.transform.position, 2).OnComplete(() =>
+                                {
+                                    ropelist.rope.transform.parent.gameObject.SetActive(false);
+                                });
                                 ropelist.headOfRope.canTouch = false;
+                                ResetSlot(ropelist.headOfRope.slotSelect);
                                 ropelist.tailOfRope.canTouch = false;
+                                ResetSlot(ropelist.tailOfRope.slotSelect);
+                                _countRope--;
                                 count++;
                             }
                         }
@@ -180,11 +196,12 @@ public class Level : MonoBehaviour
                 }
                 if (count == ropes.Count)
                 {
+                    Debug.Log("win");
                     OnWin();
                 }
                 foreach (var brope in ropes)
                 {
-                    Destroy(brope.gameObject.GetComponent<BoxCollider>());
+                    Destroy(brope.gameObject.GetComponent<MeshCollider>());
                     brope.iscollide = false;
                 }
             }
@@ -194,9 +211,16 @@ public class Level : MonoBehaviour
     {
         GameManager.Instance.OnWinGame();
     }
-    public void OnLose()
+    public void ResetSlot(Transform slot)
     {
-
+        if (slot.root != slot)
+        {
+            slot.GetComponentInParent<ItemSlot>().isCollide = false;
+        }
+        else
+        {
+            slot.GetComponent<ItemSlot>().isCollide = false;
+        }
     }
 }
 [Serializable]
