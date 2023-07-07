@@ -92,7 +92,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
         if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
         gameState = GameState.WinGame;
         Observer.WinLevel?.Invoke(levelController.currentLevel);
-        Data.CurrentLevel++;
         DOTween.Sequence().AppendInterval(delayPopupShowTime).AppendCallback(() =>
         {
             PopupController.Instance.HideAll();
@@ -100,6 +99,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
             {
                 popupWin.SetupMoneyWin(levelController.currentLevel.bonusMoney);
                 popupWin.Show();
+                Data.CurrentLevel++;
             }
         });
     }
