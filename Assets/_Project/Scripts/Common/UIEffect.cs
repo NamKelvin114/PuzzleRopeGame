@@ -9,13 +9,13 @@ public class UIEffect : MonoBehaviour
     [SerializeField] private bool playOnAwake = true;
     [SerializeField] private float animTime = .5f;
     [SerializeField] private float delayAnimTime;
-    
+
     [SerializeField] private Vector3 fromScale = Vector3.zero;
-    [SerializeField] [ReadOnly] private Vector3 saveLocalScale; 
+    [SerializeField] [ReadOnly] private Vector3 saveLocalScale;
     [Header("Shake Effect")]
     [SerializeField] private float strength = 3f;
-    [Header("Move Effect")] 
-    [ShowIf("animType", AnimType.Move)] private MoveType _moveType;
+    [Header("Move Effect")]
+    [ShowIf("animType", AnimType.Move)] [SerializeField] private MoveType _moveType;
     [ShowIf("IsShowAttributeFromPosition")] [SerializeField] private Vector3 fromPosition;
     [ShowIf("IsShowAttributesMoveDirection")] [SerializeField] private DirectionType directionType;
     [ShowIf("IsShowAttributesMoveDirection")] [SerializeField] private float offset;
@@ -47,7 +47,7 @@ public class UIEffect : MonoBehaviour
         switch (animType)
         {
             case AnimType.OutBack:
-                _sequence = DOTween.Sequence().SetDelay(delayAnimTime).OnStart(()=>transform.localScale = fromScale).Append(transform.DOScale(Vector3.one, animTime).OnKill(()=>transform.localScale = saveLocalScale).SetEase(Ease.OutBack));
+                _sequence = DOTween.Sequence().SetDelay(delayAnimTime).OnStart(() => transform.localScale = fromScale).Append(transform.DOScale(Vector3.one, animTime).OnKill(() => transform.localScale = saveLocalScale).SetEase(Ease.OutBack));
                 break;
             case AnimType.Shake:
                 _sequence = DOTween.Sequence().SetDelay(delayAnimTime).Append(transform.DOShakeRotation(animTime, strength).SetEase(Ease.Linear));
@@ -74,7 +74,7 @@ public class UIEffect : MonoBehaviour
                             case DirectionType.Right:
                                 _sequence = DOTween.Sequence().SetDelay(delayAnimTime).Append(transform.DOLocalMoveX(transform.localPosition.x + offset, animTime).SetEase(Ease.InBack));
                                 break;
-                        } 
+                        }
                         break;
                 }
                 break;
@@ -86,8 +86,8 @@ public class UIEffect : MonoBehaviour
         Reset();
         _sequence?.Kill();
     }
-    
-    
+
+
     public void Reset()
     {
         if (!Application.isPlaying) return;
