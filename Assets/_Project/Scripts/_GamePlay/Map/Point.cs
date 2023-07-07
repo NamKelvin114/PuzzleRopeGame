@@ -11,20 +11,12 @@ public class Point : MonoBehaviour
     public Transform slotSelect;
     private Transform _currentSlotSelect;
     [SerializeField] private LayerMask checkWith;
-    private Vector3 _currentPosi;
     private float velocity;
     private Vector3 prvious;
-    public bool canTouch { get; set; }
-    private void OnEnable()
-    {
-    }
-    private void OnDisable()
-    {
-    }
+    public bool canTouch;
     private void Start()
     {
         canTouch = true;
-        _currentPosi = transform.position;
         if (slotSelect != null)
         {
             _currentSlotSelect = slotSelect;
@@ -34,7 +26,6 @@ public class Point : MonoBehaviour
     {
         if (slotSelect == null) return;
         var condition = slotSelect.gameObject.GetComponentInParent<ItemSlot>();
-        canTouch = false;
         if (condition.isCollide == false && (slotSelect.position - center.position).magnitude <= maxLength + transform.lossyScale.x / 2)
         {
             Movement(slotSelect.position);
@@ -51,7 +42,7 @@ public class Point : MonoBehaviour
     }
     void Movement(Vector3 destination)
     {
-        transform.DOMove(destination, 0.3f).OnComplete((() =>
+        transform.DOMove(destination, 0.3f).OnUpdate((() => canTouch = false)).OnComplete((() =>
         {
             Observer.DoneMove?.Invoke();
             canTouch = true;
