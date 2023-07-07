@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
+using Obi;
 using Pancake;
 using UnityEditor;
 using UnityEngine;
@@ -7,14 +9,18 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     [ReadOnly] public int bonusMoney;
-    [SerializeField] private Point selectPoint;
+    [ReadOnly] [SerializeField] private Point selectPoint;
     [SerializeField] private Camera camera;
-    [SerializeField] private List<SetupSrope> ropeList = new List<SetupSrope>();
-    [SerializeField] private SetupSrope currentRope;
+    [SerializeField] private List<SetupRope> ropeList = new List<SetupRope>();
+    [ReadOnly] [SerializeField] private SetupRope currentRope;
+    [ReadOnly] [SerializeField] private List<Rope> ropes = new List<Rope>();
     private bool _updatePosi;
+    private float _velocity;
+    private Vector3 _previous;
 
     private bool _isFingerDown;
     private bool _isFingerDrag;
+    private bool _isFingerUp;
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
 
@@ -23,7 +29,7 @@ public class Level : MonoBehaviour
     private void StartLevel()
     {
         Data.CurrentLevel = Utility.GetNumberInAString(gameObject.name);
-        
+
         EditorApplication.isPlaying = true;
     }
     #endif
@@ -33,7 +39,8 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerDown += HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp += HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate += HandleFingerUpdate;
-
+        Observer.RopeCheck += CheckCondition;
+        Observer.DoneMove += CheckRopeCollide;
     }
 
     void OnDisable()
@@ -41,39 +48,44 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerDown -= HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp -= HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate -= HandleFingerUpdate;
+        Observer.RopeCheck -= CheckCondition;
+        Observer.DoneMove -= CheckRopeCollide;
     }
 
     void HandleFingerDown(Lean.Touch.LeanFinger finger)
     {
         if (!finger.IsOverGui)
         {
-
+            _isFingerUp = true;
             //Get Object raycast hit
             var ray = finger.GetRay(Camera);
             var hit = default(RaycastHit);
 
             if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
             { //ADDED LAYER SELECTION
+                ropes.Clear();
                 if (hit.collider.gameObject.CompareTag(Constant.Point))
                 {
-                    if (finger.Index == -42) return;
-                    _isFingerDrag = true;
-                    selectPoint = hit.collider.gameObject.GetComponentInParent<Point>();
-                    foreach (var rope in ropeList)
+                    var checkPoint = hit.collider.gameObject.GetComponent<Point>();
+                    if (checkPoint.canTouch)
                     {
-                        if (rope.headOfRope == selectPoint)
+                        selectPoint = checkPoint;
+                        foreach (var rope in ropeList)
                         {
-                            selectPoint.SetCenter(rope.tailOfRope.transform.position);
-                            currentRope = rope;
+                            if (rope.headOfRope == selectPoint)
+                            {
+                                selectPoint.SetCenter(rope.tailOfRope.transform.position);
+                                currentRope = rope;
+                            }
+                            else if (rope.tailOfRope == selectPoint)
+                            {
+                                selectPoint.SetCenter(rope.headOfRope.transform.position);
+                                currentRope = rope;
+                            }
                         }
-                        else if (rope.tailOfRope == selectPoint)
-                        {
-                            selectPoint.SetCenter(rope.headOfRope.transform.position);
-                            currentRope = rope;
-                        }
+                        _isFingerDrag = true;
+                        _updatePosi = true;
                     }
-                    _isFingerDown = true;
-                    _updatePosi = true;
                 }
             }
         }
@@ -87,68 +99,111 @@ public class Level : MonoBehaviour
 
     void HandleFingerUp(Lean.Touch.LeanFinger finger)
     {
-        _isFingerDown = false;
-        Observer.OnFingerUp?.Invoke(currentRope.Length);
-        selectPoint = null;
+        if (_isFingerUp)
+        {
+            SetFingerUp();
+        }
     }
 
     void HandleFingerUpdate(Lean.Touch.LeanFinger finger)
     {
-        if (_isFingerDown)
+        if (_isFingerDrag && selectPoint != null)
         {
             if (finger.Index == -42) return;
             Vector3 fingerPos = finger.GetWorldPosition(-camera.transform.position.z, camera);
-            if (((selectPoint.center.position - fingerPos).magnitude) <= currentRope.Length)
+            _velocity = ((fingerPos - _previous).magnitude) / Time.deltaTime;
+            _previous = fingerPos;
+            // Debug.Log(velocity);
+            if (_velocity < 150)
             {
-                RotateCenter(finger);
-                selectPoint.Move(fingerPos);
-                selectPoint.ShootRaycast();
+                if (((selectPoint.center.position - fingerPos).magnitude) <= currentRope.Length)
+                {
+                    RotateCenter(finger);
+                    selectPoint.Move(fingerPos);
+                    selectPoint.ShootRaycast();
+                }
+                else
+                {
+                    RotateCenter(finger);
+                    selectPoint.ShootRaycast();
+                }
             }
             else
             {
-                RotateCenter(finger);
-                selectPoint.ShootRaycast();
+                _isFingerUp = false;
+                SetFingerUp();
             }
-
         }
     }
-
-    private void Start()
+    void SetFingerUp()
     {
-        Observer.WinLevel += OnWin;
-        Observer.LoseLevel += OnLose;
+        _isFingerDown = false;
+        _isFingerDrag = false;
+        if (selectPoint != null)
+        {
+            selectPoint.UpdateCurrentPosi(currentRope.Length);
+            selectPoint = null;
+        }
     }
-
-    private void OnDestroy()
+    void CheckRopeCollide()
     {
-        Observer.WinLevel -= OnWin;
-        Observer.LoseLevel -= OnLose;
+        foreach (var rope in ropeList)
+        {
+            var b = rope.rope.gameObject.AddComponent<BoxCollider>();
+            b.isTrigger = true;
+        }
     }
-
-    public void OnWin(Level level)
+    void CheckCondition(Rope rope)
     {
-
+        if (!ropes.Contains(rope))
+        {
+            ropes.Add(rope);
+            if (ropes.Count == ropeList.Count)
+            {
+                int count = 0;
+                foreach (var arope in ropes)
+                {
+                    if (arope.iscollide == false)
+                    {
+                        foreach (var ropelist in ropeList)
+                        {
+                            if (ropelist.rope.GetComponent<Rope>() == arope)
+                            {
+                                ropelist.rope.stretchingScale = 0;
+                                ropelist.headOfRope.transform.DOMove(ropelist.tailOfRope.transform.position, 2);
+                                ropelist.headOfRope.canTouch = false;
+                                ropelist.tailOfRope.canTouch = false;
+                                count++;
+                            }
+                        }
+                    }
+                }
+                if (count == ropes.Count)
+                {
+                    OnWin();
+                }
+                foreach (var brope in ropes)
+                {
+                    Destroy(brope.gameObject.GetComponent<BoxCollider>());
+                    brope.iscollide = false;
+                }
+            }
+        }
     }
-
-    public void OnLose(Level level)
+    public void OnWin()
+    {
+        GameManager.Instance.OnWinGame();
+    }
+    public void OnLose()
     {
 
     }
 }
 [Serializable]
-public class SetupSrope
+public class SetupRope
 {
-    public ERopeIndex ropeOrder;
+    public ObiRope rope;
     public Point headOfRope;
     public Point tailOfRope;
     public float Length;
-}
-public enum ERopeIndex
-{
-    first,
-    second,
-    third,
-    fourth,
-    fifth,
-    sixth,
 }
