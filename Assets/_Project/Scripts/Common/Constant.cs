@@ -40,9 +40,6 @@ public class Constant
     public const string EquipItem = "EQUIP_ITEM";
     public const string Point = "Point";
     public const string Slot = "Slot";
-
-
-
-
+    public const string Rope = "Rope";
 
 }
