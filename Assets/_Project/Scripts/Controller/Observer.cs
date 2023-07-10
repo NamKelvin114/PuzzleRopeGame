@@ -26,7 +26,6 @@ public static class Observer
     public static Action PurchaseFail;
     public static Action PurchaseSucceed;
     public static Action ClaimReward;
-    
     #endregion
 
     #region Gameplay
@@ -39,5 +38,6 @@ public static class Observer
     public static Action<float> OnFingerUp;
     public static Action<Rope> RopeCheck;
     public static Action DoneMove;
+    public static Action MaxLength;
     #endregion
 }
