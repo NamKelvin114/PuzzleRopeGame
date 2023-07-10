@@ -632,6 +632,7 @@ MonoBehaviour:
     tailOfRope: {fileID: 0}
     Length: 0
   ropes: []
+  _previousPoint: {fileID: 0}
 --- !u!1 &3118258025347640560
 GameObject:
   m_ObjectHideFlags: 0
@@ -4306,6 +4307,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obi Solver
       objectReference: {fileID: 0}
+    - target: {fileID: 9108575353807305018, guid: 30a32443dc32e9447a3be48f71da0f9e,
+        type: 3}
+      propertyPath: substeps
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -4440,6 +4446,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
+      propertyPath: tearingEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
       propertyPath: _stretchingScale
       value: 0.5
       objectReference: {fileID: 0}
@@ -4450,8 +4461,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
+      propertyPath: _bendConstraintsEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
       propertyPath: solverIndices.Array.size
       value: 148
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: _distanceConstraintsEnabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
