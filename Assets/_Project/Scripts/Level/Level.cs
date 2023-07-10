@@ -219,7 +219,7 @@ public class Level : MonoBehaviour
                             {
                                 ropelist.rope.stretchingScale = 0;
                                 r.isDone = true;
-                                ropelist.headOfRope.transform.DOMove(ropelist.tailOfRope.transform.position, 2).OnComplete(() =>
+                                ropelist.headOfRope.transform.DOMove(ropelist.tailOfRope.transform.position, 1).OnComplete(() =>
                                 {
                                     ropelist.rope.transform.parent.gameObject.SetActive(false);
                                 });
@@ -235,7 +235,6 @@ public class Level : MonoBehaviour
                 }
                 if (count == ropes.Count)
                 {
-                    Debug.Log("win");
                     OnWin();
                 }
                 foreach (var brope in ropes)
