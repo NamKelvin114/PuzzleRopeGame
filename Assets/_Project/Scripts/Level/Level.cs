@@ -22,6 +22,7 @@ public class Level : MonoBehaviour
     private bool _isFingerDrag;
     private bool _isFingerUp;
     private int _countRope;
+    public Point _previousPoint;
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
 
@@ -42,6 +43,7 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerUpdate += HandleFingerUpdate;
         Observer.RopeCheck += CheckCondition;
         Observer.DoneMove += CheckRopeCollide;
+        Observer.MaxLength += MaxCondition;
     }
 
     void OnDisable()
@@ -51,10 +53,26 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerUpdate -= HandleFingerUpdate;
         Observer.RopeCheck -= CheckCondition;
         Observer.DoneMove -= CheckRopeCollide;
+        Observer.MaxLength -= MaxCondition;
+
     }
     private void Start()
     {
         _countRope = ropeList.Count;
+    }
+    void MaxCondition()
+    {
+        SetMaxCondition(_previousPoint);
+    }
+    void SetMaxCondition(Point getPoint)
+    {
+        _isFingerUp = false;
+        _isFingerDown = false;
+        _isFingerDrag = false;
+        if (getPoint != null)
+        {
+            getPoint.SetMaxLength();
+        }
     }
 
     void HandleFingerDown(Lean.Touch.LeanFinger finger)
@@ -73,24 +91,45 @@ public class Level : MonoBehaviour
                     var checkPoint = hit.collider.gameObject.GetComponent<Point>();
                     if (checkPoint.canTouch)
                     {
+                        StopUpdateRope();
+                        ropes.Clear();
                         selectPoint = checkPoint;
+                        selectPoint.ePointState = EPointState.Move;
+                        _previousPoint = selectPoint;
+                        Vector3 fingerPos = finger.GetWorldPosition(-camera.transform.position.z, camera);
+                        _previous = fingerPos;
                         foreach (var rope in ropeList)
                         {
                             if (rope.headOfRope == selectPoint)
                             {
                                 selectPoint.SetCenter(rope.tailOfRope.transform.position);
-                                currentRope = rope;
+                                SetCurrentRope(rope);
                             }
                             else if (rope.tailOfRope == selectPoint)
                             {
                                 selectPoint.SetCenter(rope.headOfRope.transform.position);
-                                currentRope = rope;
+                                SetCurrentRope(rope);
                             }
                         }
                         _isFingerDrag = true;
                         _updatePosi = true;
                     }
                 }
+            }
+        }
+    }
+    void SetCurrentRope(SetupRope setupRope)
+    {
+        setupRope.rope.GetComponent<Rope>().isCheckLength = true;
+        currentRope = setupRope;
+    }
+    void StopUpdateRope()
+    {
+        foreach (var rope in ropeList)
+        {
+            if (rope == currentRope)
+            {
+                rope.rope.GetComponent<Rope>().isCheckLength = false;
             }
         }
     }
@@ -117,8 +156,8 @@ public class Level : MonoBehaviour
             Vector3 fingerPos = finger.GetWorldPosition(-camera.transform.position.z, camera);
             _velocity = ((fingerPos - _previous).magnitude) / Time.deltaTime;
             _previous = fingerPos;
-            // Debug.Log(velocity);
-            if (_velocity < 150)
+            //Debug.Log(_velocity);
+            if (_velocity < 45)
             {
                 if (((selectPoint.center.position - fingerPos).magnitude) <= currentRope.Length)
                 {
@@ -134,8 +173,7 @@ public class Level : MonoBehaviour
             }
             else
             {
-                // _isFingerUp = false;
-                // SetFingerUp();
+                SetMaxCondition(selectPoint);
             }
         }
     }
@@ -151,7 +189,7 @@ public class Level : MonoBehaviour
     }
     void CheckRopeCollide()
     {
-        ropes.Clear();
+        _previousPoint = selectPoint;
         foreach (var rope in ropeList)
         {
             if (rope.rope.GetComponent<Rope>().isDone == false)
@@ -176,10 +214,11 @@ public class Level : MonoBehaviour
                     {
                         foreach (var ropelist in ropeList)
                         {
-                            if (ropelist.rope.GetComponent<Rope>() == arope)
+                            var r = ropelist.rope.GetComponent<Rope>();
+                            if (r == arope)
                             {
                                 ropelist.rope.stretchingScale = 0;
-                                ropelist.rope.GetComponent<Rope>().isDone = true;
+                                r.isDone = true;
                                 ropelist.headOfRope.transform.DOMove(ropelist.tailOfRope.transform.position, 2).OnComplete(() =>
                                 {
                                     ropelist.rope.transform.parent.gameObject.SetActive(false);
