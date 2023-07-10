@@ -172,6 +172,8 @@ MonoBehaviour:
     itemSlot: {fileID: 2764740923186479531}
   - point: {fileID: 5871104091076910835}
     itemSlot: {fileID: 4170378616360146125}
+  - point: {fileID: 2079192648958533951}
+    itemSlot: {fileID: 3874201926239663908}
   point: {fileID: 1238484709445367136}
 --- !u!1001 &12264904177523106
 PrefabInstance:
@@ -6851,7 +6853,7 @@ PrefabInstance:
         type: 3}
       propertyPath: slotSelect
       value: 
-      objectReference: {fileID: 8162734057357065814}
+      objectReference: {fileID: 7123111829217347801}
     - target: {fileID: 7669499124025220827, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
       propertyPath: m_LocalPosition.x
