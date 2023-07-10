@@ -9,43 +9,73 @@ public class Point : MonoBehaviour
 {
     public Transform center;
     public Transform slotSelect;
-    private Transform _currentSlotSelect;
+    public Transform _currentSlotSelect;
+    public EPointState ePointState;
     [SerializeField] private LayerMask checkWith;
-    private float velocity;
-    private Vector3 prvious;
+    private bool _isBack;
     public bool canTouch;
     private void Start()
     {
+        _isBack = false;
         canTouch = true;
         if (slotSelect != null)
         {
             _currentSlotSelect = slotSelect;
         }
     }
+    public void SetMaxLength()
+    {
+        if (_isBack == false && ePointState == EPointState.Move)
+        {
+            _isBack = true;
+            Movement(_currentSlotSelect.position, (() =>
+            {
+                _isBack = false;
+                slotSelect = _currentSlotSelect;
+                GetItemSlot(_currentSlotSelect).isCollide = true;
+            }));
+        }
+    }
     public void UpdateCurrentPosi(float maxLength)
     {
         if (slotSelect == null) return;
-        var condition = slotSelect.gameObject.GetComponentInParent<ItemSlot>();
+        var condition = GetItemSlot(slotSelect);
         if (condition.isCollide == false && (slotSelect.position - center.position).magnitude <= maxLength + transform.lossyScale.x / 2)
         {
-            Movement(slotSelect.position);
-            condition.isCollide = true;
-            _currentSlotSelect = slotSelect;
+            Movement(slotSelect.position, (() =>
+            {
+                if (_isBack == false)
+                {
+                    condition.isCollide = true;
+                    _currentSlotSelect = slotSelect;
+                }
+            }));
         }
         else
         {
             var newPosi = new Vector3(_currentSlotSelect.position.x, _currentSlotSelect.position.y, 0);
-            Movement(newPosi);
-            slotSelect = _currentSlotSelect;
-            slotSelect.gameObject.GetComponentInParent<ItemSlot>().isCollide = true;
+            Movement(newPosi, (() =>
+            {
+                slotSelect = _currentSlotSelect;
+                GetItemSlot(slotSelect).isCollide = true;
+            }));
         }
     }
-    void Movement(Vector3 destination)
+    ItemSlot GetItemSlot(Transform itemSLot) => itemSLot.gameObject.GetComponentInParent<ItemSlot>();
+    void Movement(Vector3 destination, Action action)
     {
-        transform.DOMove(destination, 0.3f).OnUpdate((() => canTouch = false)).OnComplete((() =>
+        transform.DOMove(destination, 0.3f).OnUpdate((() =>
         {
-            Observer.DoneMove?.Invoke();
+            canTouch = false;
+        })).OnComplete((() =>
+        {
+            action?.Invoke();
+            ePointState = EPointState.Idle;
             canTouch = true;
+            if (_isBack == false)
+            {
+                Observer.DoneMove?.Invoke();
+            }
         }));
     }
     public void SetCenter(Vector3 centerPosi)
@@ -56,7 +86,7 @@ public class Point : MonoBehaviour
         transform.position = slotSelect.position;
         if (slotSelect != null)
         {
-            slotSelect.gameObject.GetComponentInParent<ItemSlot>().isCollide = false;
+            GetItemSlot(slotSelect).isCollide = false;
         }
     }
     public void Move(Vector3 updatePosi)
@@ -73,4 +103,9 @@ public class Point : MonoBehaviour
             slotSelect = hit.transform;
         }
     }
+}
+public enum EPointState
+{
+    Idle,
+    Move,
 }
