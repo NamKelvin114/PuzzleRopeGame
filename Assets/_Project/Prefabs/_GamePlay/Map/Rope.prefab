@@ -647,6 +647,7 @@ MonoBehaviour:
   iscollide: 0
   isShowLength: 0
   isCheckLength: 0
+  isDone: 0
   normal: {fileID: 2100000, guid: 44ab0cc40b59345718856f6e1c1225f3, type: 2}
   maxLength: {fileID: 2100000, guid: 45427d5800b015a4dad09d5147130dc9, type: 2}
   ropeMesh: {fileID: 5120218468765113212}
