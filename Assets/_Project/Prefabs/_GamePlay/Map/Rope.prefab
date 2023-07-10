@@ -132,6 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   center: {fileID: 7669499124025220827}
   slotSelect: {fileID: 0}
+  _currentSlotSelect: {fileID: 0}
+  ePointState: 0
   checkWith:
     serializedVersion: 2
     m_Bits: 8
@@ -501,7 +503,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 14d074b414be69a43a15bf6cd847c294, type: 2}
+  - {fileID: 2100000, guid: 45427d5800b015a4dad09d5147130dc9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -559,7 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uvAnchor: 0
-  uvScale: {x: 1, y: 1}
+  uvScale: {x: 1, y: 12.21}
   normalizeV: 1
   section: {fileID: 11400000, guid: 71d9f081da99d544e8911cbe41e64df2, type: 2}
   thicknessScale: 0.8
@@ -643,7 +645,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iscollide: 0
-  isDone: 0
+  isShowLength: 0
+  isCheckLength: 0
+  normal: {fileID: 2100000, guid: 44ab0cc40b59345718856f6e1c1225f3, type: 2}
+  maxLength: {fileID: 2100000, guid: 45427d5800b015a4dad09d5147130dc9, type: 2}
+  ropeMesh: {fileID: 5120218468765113212}
 --- !u!1 &3863471122080879814
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +750,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   center: {fileID: 7368932806188072195}
   slotSelect: {fileID: 0}
+  _currentSlotSelect: {fileID: 0}
+  ePointState: 0
   checkWith:
     serializedVersion: 2
     m_Bits: 8
