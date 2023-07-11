@@ -19,7 +19,6 @@ public class Surface : MonoBehaviour
     private ItemSlot[,] _slotArray;
     [SerializeField] private List<SlotSelected> slotSelected = new List<SlotSelected>();
     [SerializeField] private Transform point;
-    #if UNITY_EDITOR
     public void SpawnSlot()
     {
         _slotArray = new ItemSlot[maxLength, maxHeight];
@@ -28,7 +27,7 @@ public class Surface : MonoBehaviour
         {
             for (int i = 0; i < maxLength; i++)
             {
-                GameObject getObj = PrefabUtility.InstantiatePrefab(slot) as GameObject;
+                var getObj = SpawnObj(slot);
                 getObj.transform.localPosition = new Vector3(distance * i, distance * j, 0);
                 getObj.transform.SetParent(this.transform);
                 getObj.GetComponent<ItemSlot>().column = i;
@@ -69,6 +68,11 @@ public class Surface : MonoBehaviour
             }
         }
     }
+    GameObject SpawnObj(GameObject getObj)
+    {
+        var spawnObj = Instantiate(getObj, this.transform);
+        return spawnObj;
+    }
     public void ClearSlotSelected()
     {
         foreach (var clearSlot in slotSelected)
@@ -105,7 +109,6 @@ public class Surface : MonoBehaviour
             }
         }
     }
-      #endif
     [Serializable]
     public class SlotSelected
     {
