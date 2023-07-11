@@ -2735,7 +2735,7 @@ PrefabInstance:
     - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
       propertyPath: _stretchingScale
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
@@ -4452,7 +4452,7 @@ PrefabInstance:
     - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
       propertyPath: _stretchingScale
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 9184704506592372516, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
