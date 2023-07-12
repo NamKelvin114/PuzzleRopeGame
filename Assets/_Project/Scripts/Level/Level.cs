@@ -22,7 +22,7 @@ public class Level : MonoBehaviour
     private bool _isFingerDrag;
     private bool _isFingerUp;
     private int _countRope;
-    public Point _previousPoint;
+    private Point _previousPoint;
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
 
@@ -190,7 +190,7 @@ public class Level : MonoBehaviour
     }
     void CheckRopeCollide()
     {
-        //_previousPoint = selectPoint;
+        _previousPoint = selectPoint;
         foreach (var rope in ropeList)
         {
             if (rope.rope.GetComponent<Rope>().isDone == false)
