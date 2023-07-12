@@ -1058,6 +1058,18 @@ PrefabInstance:
       addedObject: {fileID: 8462036886085837544}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30a32443dc32e9447a3be48f71da0f9e, type: 3}
+--- !u!114 &1761699144179046490 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1024386615683576985, guid: 30a32443dc32e9447a3be48f71da0f9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1604840827121380547}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d174fab52f0c4b8399f25d5c3ea524c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2137965445384131636 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 859657583545514231, guid: 30a32443dc32e9447a3be48f71da0f9e,
@@ -1351,6 +1363,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6037893173158050280, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: substeps
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037893173158050280, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: solvers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037893173158050280, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: solvers.Array.data[0]
+      value: 
+      objectReference: {fileID: 1761699144179046490}
     - target: {fileID: 6079472305818623003, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
       propertyPath: m_Name
@@ -3412,6 +3439,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6037893173158050280, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: substeps
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037893173158050280, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: solvers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037893173158050280, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: solvers.Array.data[0]
+      value: 
+      objectReference: {fileID: 1761699144179046490}
     - target: {fileID: 6079472305818623003, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
       propertyPath: m_Name
@@ -5650,6 +5692,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6037893173158050280, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: substeps
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037893173158050280, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: solvers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037893173158050280, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: solvers.Array.data[0]
+      value: 
+      objectReference: {fileID: 1761699144179046490}
     - target: {fileID: 6079472305818623003, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
       propertyPath: m_Name
