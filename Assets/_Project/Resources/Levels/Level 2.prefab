@@ -65,7 +65,6 @@ MonoBehaviour:
     tailOfRope: {fileID: 0}
     Length: 0
   ropes: []
-  _previousPoint: {fileID: 0}
 --- !u!1 &8064487436867141992
 GameObject:
   m_ObjectHideFlags: 0
