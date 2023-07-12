@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 7669499124025220827}
-  ropeSelected: {fileID: 0}
+  stopReset: 0
   slotSelect: {fileID: 0}
   ePointState: 0
   checkWith:
@@ -850,7 +850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 7368932806188072195}
-  ropeSelected: {fileID: 0}
+  stopReset: 0
   slotSelect: {fileID: 0}
   ePointState: 0
   checkWith:
