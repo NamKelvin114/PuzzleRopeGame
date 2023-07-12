@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 2081535740691992211}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &983329543867763444
 SpriteRenderer:
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
     type: 3}
-  m_Color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+  m_Color: {r: 0.6433606, g: 0.6792453, b: 0.64365256, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -99,6 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 0}
+  normalColor: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 0
   column: 0
