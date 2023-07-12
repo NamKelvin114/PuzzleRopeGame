@@ -2031,14 +2031,12 @@ MonoBehaviour:
   groups:
   - {fileID: -6791969088600441439}
   - {fileID: 8129309702729258712}
-  - {fileID: 827353801294074105}
   - {fileID: -8732092505100941890}
   - {fileID: 429444688172155701}
   - {fileID: -4577264700609102006}
   path:
     m_Names:
     - Head
-    - a
     - a
     - a
     - a
@@ -2053,10 +2051,6 @@ MonoBehaviour:
         inTangent: {x: -0.20770192, y: 0.0000025273541, z: 0}
         position: {x: -3.122137, y: -0.058200266, z: 0}
         outTangent: {x: 0.28502584, y: -0.0000034682453, z: 0}
-      - tangentMode: 0
-        inTangent: {x: -0.12265527, y: 0.0000057183206, z: 0}
-        position: {x: -1.39, y: -0.05821412, z: 0}
-        outTangent: {x: 0.04778242, y: -0.0000022276677, z: -0}
       - tangentMode: 0
         inTangent: {x: -0.10387778, y: 0.00008649148, z: -0}
         position: {x: 1.02, y: -0.06103844, z: 0}
@@ -2076,10 +2070,8 @@ MonoBehaviour:
       - {x: 0, y: 1, z: 0}
       - {x: 0, y: 1, z: 0}
       - {x: 0, y: 1, z: 0}
-      - {x: 0, y: 1, z: 0}
     m_Colors:
       data:
-      - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
@@ -2092,11 +2084,9 @@ MonoBehaviour:
       - 1
       - 1
       - 1
-      - 1
     m_Masses:
       data:
       - 0.1
-      - 0.10000001
       - 0.10000001
       - 0.10000001
       - 0.10000001
@@ -2108,9 +2098,8 @@ MonoBehaviour:
       - 1
       - 1
       - 1
-      - 1
     m_Filters:
-      data: 0004fffd000400000100ffff0100ffff0004fffd0004fffd
+      data: 0004fffd000400000100ffff0004fffd0004fffd
     m_Closed: 0
     m_ArcLengthTable:
     - 0
@@ -2420,20 +2409,6 @@ MonoBehaviour:
   m_Name: a
   m_EditorClassIdentifier: 
   particleIndices: 3d000000
-  m_Blueprint: {fileID: 11400000}
---- !u!114 &827353801294074105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 775ad4994fda946d1a5936c7e2dfc785, type: 3}
-  m_Name: a
-  m_EditorClassIdentifier: 
-  particleIndices: 18000000
   m_Blueprint: {fileID: 11400000}
 --- !u!114 &8129309702729258712
 MonoBehaviour:
