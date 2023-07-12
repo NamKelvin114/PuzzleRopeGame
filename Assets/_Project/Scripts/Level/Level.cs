@@ -80,24 +80,17 @@ public class Level : MonoBehaviour
         if (!finger.IsOverGui)
         {
             _isFingerUp = true;
-            //Get Object raycast hit
             var ray = finger.GetRay(Camera);
             var hit = default(RaycastHit);
 
             if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
-            { //ADDED LAYER SELECTION
+            {
                 if (hit.collider.gameObject.CompareTag(Constant.Point))
                 {
                     var checkPoint = hit.collider.gameObject.GetComponent<Point>();
                     if (checkPoint.canTouch)
                     {
-                        StopUpdateRope();
-                        ropes.Clear();
                         selectPoint = checkPoint;
-                        selectPoint.ePointState = EPointState.Move;
-                        _previousPoint = selectPoint;
-                        Vector3 fingerPos = finger.GetWorldPosition(-camera.transform.position.z, camera);
-                        _previous = fingerPos;
                         foreach (var rope in ropeList)
                         {
                             rope.tailOfRope.StopAllCoroutines();
@@ -113,6 +106,12 @@ public class Level : MonoBehaviour
                                 SetCurrentRope(rope);
                             }
                         }
+                        selectPoint.ePointState = EPointState.Move;
+                        _previousPoint = selectPoint;
+                        Vector3 fingerPos = finger.GetWorldPosition(-camera.transform.position.z, camera);
+                        _previous = fingerPos;
+                        StopUpdateRope();
+                        ropes.Clear();
                         _isFingerDrag = true;
                         _updatePosi = true;
                     }
