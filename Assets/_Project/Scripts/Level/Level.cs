@@ -90,11 +90,17 @@ public class Level : MonoBehaviour
                     var checkPoint = hit.collider.gameObject.GetComponent<Point>();
                     if (checkPoint.canTouch)
                     {
+                        StopUpdateRope();
+                        ropes.Clear();
                         selectPoint = checkPoint;
+                        selectPoint.ePointState = EPointState.Move;
+                        _previousPoint = selectPoint;
+                        Vector3 fingerPos = finger.GetWorldPosition(-camera.transform.position.z, camera);
+                        _previous = fingerPos;
                         foreach (var rope in ropeList)
                         {
-                            rope.tailOfRope.StopAllCoroutines();
-                            rope.headOfRope.StopAllCoroutines();
+                            rope.tailOfRope.CancelReset();
+                            rope.headOfRope.CancelReset();
                             if (rope.headOfRope == selectPoint)
                             {
                                 selectPoint.SetCenter(rope.tailOfRope.transform.position);
@@ -106,12 +112,6 @@ public class Level : MonoBehaviour
                                 SetCurrentRope(rope);
                             }
                         }
-                        selectPoint.ePointState = EPointState.Move;
-                        _previousPoint = selectPoint;
-                        Vector3 fingerPos = finger.GetWorldPosition(-camera.transform.position.z, camera);
-                        _previous = fingerPos;
-                        StopUpdateRope();
-                        ropes.Clear();
                         _isFingerDrag = true;
                         _updatePosi = true;
                     }
@@ -190,7 +190,7 @@ public class Level : MonoBehaviour
     }
     void CheckRopeCollide()
     {
-        _previousPoint = selectPoint;
+        //_previousPoint = selectPoint;
         foreach (var rope in ropeList)
         {
             if (rope.rope.GetComponent<Rope>().isDone == false)
