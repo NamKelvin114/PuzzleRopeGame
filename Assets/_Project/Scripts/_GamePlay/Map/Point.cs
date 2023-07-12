@@ -10,7 +10,7 @@ using UnityEngine.PlayerLoop;
 public class Point : MonoBehaviour
 {
     public Transform center;
-    [ReadOnly] public ObiRope ropeSelected;
+    [ReadOnly] public bool stopReset;
     public Transform slotSelect;
     private Transform _currentSlotSelect;
     public EPointState ePointState;
@@ -64,10 +64,16 @@ public class Point : MonoBehaviour
             }));
         }
     }
+    public void CancelReset()
+    {
+        stopReset = true;
+        StopCoroutine(WaitToResetRope());
+    }
     ItemSlot GetItemSlot(Transform itemSLot) => itemSLot.gameObject.GetComponentInParent<ItemSlot>();
     void Movement(Vector3 destination, Action action)
     {
-        transform.DOMove(destination, 0.3f).OnUpdate((() =>
+        stopReset = false;
+        transform.DOMove(destination, 0.1f).OnUpdate((() =>
         {
             canTouch = false;
         })).OnComplete((() =>
@@ -83,9 +89,11 @@ public class Point : MonoBehaviour
     }
     IEnumerator WaitToResetRope()
     {
-        yield return new WaitForSeconds(0.2f);
-        Observer.DoneMove?.Invoke();
-        ropeSelected = null;
+        yield return new WaitForSeconds(0.4f);
+        if (!stopReset)
+        {
+            Observer.DoneMove?.Invoke();
+        }
     }
     public void SetCenter(Vector3 centerPosi)
     {
