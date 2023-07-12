@@ -2,14 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Obi;
+using Pancake;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class Point : MonoBehaviour
 {
     public Transform center;
+    [ReadOnly] public ObiRope ropeSelected;
     public Transform slotSelect;
-    public Transform _currentSlotSelect;
+    private Transform _currentSlotSelect;
     public EPointState ePointState;
     [SerializeField] private LayerMask checkWith;
     private bool _isBack;
@@ -74,9 +77,15 @@ public class Point : MonoBehaviour
             canTouch = true;
             if (_isBack == false)
             {
-                Observer.DoneMove?.Invoke();
+                StartCoroutine(WaitToResetRope());
             }
         }));
+    }
+    IEnumerator WaitToResetRope()
+    {
+        yield return new WaitForSeconds(0.2f);
+        Observer.DoneMove?.Invoke();
+        ropeSelected = null;
     }
     public void SetCenter(Vector3 centerPosi)
     {
