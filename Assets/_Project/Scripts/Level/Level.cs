@@ -100,6 +100,8 @@ public class Level : MonoBehaviour
                         _previous = fingerPos;
                         foreach (var rope in ropeList)
                         {
+                            rope.tailOfRope.StopAllCoroutines();
+                            rope.headOfRope.StopAllCoroutines();
                             if (rope.headOfRope == selectPoint)
                             {
                                 selectPoint.SetCenter(rope.tailOfRope.transform.position);
