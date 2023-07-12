@@ -1168,6 +1168,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2137965445384131636}
     m_Modifications:
+    - target: {fileID: 1479277741780270262, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 717a88d729ecf0a47ba098c812843322, type: 2}
     - target: {fileID: 3042790170814608712, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
       propertyPath: slotSelect
@@ -1209,6 +1214,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 5480767087272417003, guid: 8602da43ab27aa0438847a15fa0d7d82,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 717a88d729ecf0a47ba098c812843322, type: 2}
     - target: {fileID: 5680401426126605094, guid: 8602da43ab27aa0438847a15fa0d7d82,
         type: 3}
       propertyPath: m_RootOrder
