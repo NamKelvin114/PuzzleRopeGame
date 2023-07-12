@@ -12,6 +12,7 @@ public class Point : MonoBehaviour
     public Transform center;
     [ReadOnly] public bool stopReset;
     public Transform slotSelect;
+    private ItemSlot _previousSlotSelected;
     private Transform _currentSlotSelect;
     public EPointState ePointState;
     [SerializeField] private LayerMask checkWith;
@@ -28,6 +29,7 @@ public class Point : MonoBehaviour
     }
     public void SetMaxLength()
     {
+        slotSelect.GetComponentInParent<ItemSlot>().SetSelected(false);
         if (_isBack == false && ePointState == EPointState.Move)
         {
             _isBack = true;
@@ -41,6 +43,7 @@ public class Point : MonoBehaviour
     }
     public void UpdateCurrentPosi(float maxLength)
     {
+        slotSelect.GetComponentInParent<ItemSlot>().SetSelected(false);
         if (slotSelect == null) return;
         var condition = GetItemSlot(slotSelect);
         if (condition.isCollide == false && (slotSelect.position - center.position).magnitude <= maxLength + transform.lossyScale.x / 2)
@@ -118,6 +121,12 @@ public class Point : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.forward, out hit, float.PositiveInfinity, checkWith))
         {
             slotSelect = hit.transform;
+            if (_previousSlotSelected != null)
+            {
+                _previousSlotSelected.SetSelected(false);
+            }
+            _previousSlotSelected = slotSelect.GetComponentInParent<ItemSlot>();
+            slotSelect.GetComponentInParent<ItemSlot>().SetSelected(true);
         }
     }
 }
