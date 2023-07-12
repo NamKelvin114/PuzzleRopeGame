@@ -205,6 +205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 0
   column: 2
@@ -360,6 +363,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 1
   column: 2
@@ -462,6 +468,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 2
   column: 1
@@ -564,6 +573,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 3
   column: 3
@@ -632,7 +644,6 @@ MonoBehaviour:
     tailOfRope: {fileID: 0}
     Length: 0
   ropes: []
-  _previousPoint: {fileID: 0}
 --- !u!1 &3118258025347640560
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,6 +796,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 1
   column: 1
@@ -887,6 +901,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 2
   column: 0
@@ -1095,6 +1112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 2
   column: 3
@@ -1197,6 +1217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 0
   column: 3
@@ -1352,6 +1375,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 1
   column: 0
@@ -1613,6 +1639,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 3
   column: 0
@@ -1715,6 +1744,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 1
   column: 3
@@ -1817,6 +1849,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 3
   column: 2
@@ -2131,6 +2166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 0
   column: 1
@@ -2233,6 +2271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 0
   column: 0
@@ -2428,6 +2469,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 3
   column: 1
@@ -2583,6 +2627,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ecef71b294bc7468d049db260d6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorSelected: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 0}
   isCollide: 0
   row: 2
   column: 2
