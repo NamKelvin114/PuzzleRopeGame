@@ -16,6 +16,7 @@ public class Rope : MonoBehaviour
     [SerializeField] private Material maxLength;
     [SerializeField] private MeshRenderer ropeMesh;
     private ObiRope _rope;
+    private ObiSolver _obiSolver;
     private void Start()
     {
         _rope = gameObject.GetComponent<ObiRope>();
