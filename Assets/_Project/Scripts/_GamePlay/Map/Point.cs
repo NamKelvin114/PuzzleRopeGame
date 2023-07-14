@@ -10,7 +10,7 @@ using UnityEngine.PlayerLoop;
 public class Point : MonoBehaviour
 {
     public Transform center;
-    [ReadOnly] public bool stopReset;
+    private bool _stopReset;
     public Transform slotSelect;
     private ItemSlot _previousSlotSelected;
     private Transform _currentSlotSelect;
@@ -69,13 +69,13 @@ public class Point : MonoBehaviour
     }
     public void CancelReset()
     {
-        stopReset = true;
+        _stopReset = true;
         StopCoroutine(WaitToResetRope());
     }
     ItemSlot GetItemSlot(Transform itemSLot) => itemSLot.gameObject.GetComponentInParent<ItemSlot>();
     void Movement(Vector3 destination, Action action)
     {
-        stopReset = false;
+        _stopReset = false;
         transform.DOMove(destination, 0.1f).OnUpdate((() =>
         {
             canTouch = false;
@@ -93,7 +93,7 @@ public class Point : MonoBehaviour
     IEnumerator WaitToResetRope()
     {
         yield return new WaitForSeconds(0.4f);
-        if (!stopReset)
+        if (!_stopReset)
         {
             Observer.DoneMove?.Invoke();
         }
