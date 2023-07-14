@@ -99,6 +99,11 @@ public class Level : MonoBehaviour
                         _previous = fingerPos;
                         foreach (var rope in ropeList)
                         {
+                            var r = rope.rope.GetComponent<MeshCollider>();
+                            if (r != null)
+                            {
+                                Destroy(r);
+                            }
                             rope.tailOfRope.CancelReset();
                             rope.headOfRope.CancelReset();
                             if (rope.headOfRope == selectPoint)
@@ -193,7 +198,7 @@ public class Level : MonoBehaviour
         _previousPoint = selectPoint;
         foreach (var rope in ropeList)
         {
-            if (rope.rope.GetComponent<Rope>().isDone == false)
+            if (rope.rope.GetComponent<Rope>().isDone == false && rope.rope.gameObject.GetComponent<MeshCollider>() == null)
             {
                 var b = rope.rope.gameObject.AddComponent<MeshCollider>();
                 b.convex = true;
