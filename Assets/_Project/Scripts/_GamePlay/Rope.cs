@@ -20,7 +20,7 @@ public class Rope : MonoBehaviour
     private void Start()
     {
         _rope = gameObject.GetComponent<ObiRope>();
-        _maxLength = Mathf.CeilToInt(_rope.CalculateLength()) + 0.8f;
+        _maxLength = Mathf.CeilToInt(_rope.CalculateLength()) + 1f;
     }
     private void OnTriggerEnter(Collider other)
     {
