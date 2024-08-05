@@ -14,6 +14,7 @@ public class Level : MonoBehaviour
     [SerializeField] private List<SetupRope> ropeList = new List<SetupRope>();
     [ReadOnly] [SerializeField] private SetupRope currentRope;
     [ReadOnly] [SerializeField] private List<Rope> ropes = new List<Rope>();
+   // [SerializeField] private ObiSolver obiSolver;
     private bool _updatePosi;
     private float _velocity;
     private Vector3 _previous;
@@ -44,6 +45,7 @@ public class Level : MonoBehaviour
         Observer.RopeCheck += CheckCondition;
         Observer.DoneMove += CheckRopeCollide;
         Observer.MaxLength += MaxCondition;
+       // obiSolver.OnCollision += Solver_OnCollision;
     }
 
     void OnDisable()
@@ -54,8 +56,10 @@ public class Level : MonoBehaviour
         Observer.RopeCheck -= CheckCondition;
         Observer.DoneMove -= CheckRopeCollide;
         Observer.MaxLength -= MaxCondition;
+       // obiSolver.OnCollision-= Solver_OnCollision;
 
     }
+   
     private void Start()
     {
         _countRope = ropeList.Count;

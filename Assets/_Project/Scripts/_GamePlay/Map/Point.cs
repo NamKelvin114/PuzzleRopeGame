@@ -33,11 +33,15 @@ public class Point : MonoBehaviour
         if (_isBack == false && ePointState == EPointState.Move)
         {
             _isBack = true;
-            Movement(_currentSlotSelect.position, (() =>
+            transform.DOMove(new Vector3(_currentSlotSelect.position.x, _currentSlotSelect.position.y,
+                transform.position.z),0.5f).OnComplete((() =>
             {
-                _isBack = false;
-                slotSelect = _currentSlotSelect;
-                GetItemSlot(_currentSlotSelect).isCollide = true;
+                transform.DOMove(_currentSlotSelect.position, 0.2f).OnComplete((() =>
+                {
+                    _isBack = false;
+                    slotSelect = _currentSlotSelect;
+                    GetItemSlot(_currentSlotSelect).isCollide = true;
+                }));
             }));
         }
     }
@@ -76,7 +80,7 @@ public class Point : MonoBehaviour
     void Movement(Vector3 destination, Action action)
     {
         _stopReset = false;
-        transform.DOMove(destination, 0.1f).OnUpdate((() =>
+        transform.DOMove(destination, 0.5f).OnUpdate((() =>
         {
             canTouch = false;
         })).OnComplete((() =>
