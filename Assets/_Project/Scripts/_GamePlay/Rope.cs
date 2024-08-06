@@ -21,27 +21,38 @@ public class Rope : MonoBehaviour
     private void Start()
     {
         _maxLength = Mathf.CeilToInt(rope.CalculateLength()) + 1f;
-        Debug.Log(rope.blueprint.positions.Length);
-        Debug.Log(rope.solver.actors.Count);
+        
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnEnable()
     {
-        if (other.gameObject.CompareTag(Constant.Rope))
+        Observer.DoneMove += DoneMoveCallBack;
+    }
+    private void OnDisable()
+    {
+        Observer.DoneMove -= DoneMoveCallBack;
+    }
+    int _checkCollide;
+    void DoneMoveCallBack()
+    {
+        _checkCollide = 0;
+        foreach (var particle in particleCollideChecks)
+        {
+            if (particle.Iscollide())
+            {
+                _checkCollide++;
+            }
+        }
+        if (_checkCollide==0)
+        {
+            iscollide = false;
+        }
+        else
         {
             iscollide = true;
-            Observer.RopeCheck?.Invoke(this);
         }
-        if (other.gameObject.CompareTag(Constant.Point))
-        {
-            Observer.RopeCheck?.Invoke(this);
-        }
+        Observer.RopeCheck?.Invoke(this);
     }
-
-    private void OnDrawGizmos()
-    {
-       Gizmos.DrawWireSphere(rope.GetParticlePosition(50),2);
-    }
-
+   
     private void Update()
     {
         var a = gameObject.GetComponent<ObiRope>();

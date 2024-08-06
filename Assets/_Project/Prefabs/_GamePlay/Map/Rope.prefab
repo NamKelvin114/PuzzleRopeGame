@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 2529528736487411374}
   m_Layer: 0
   m_Name: Head
-  m_TagString: Point
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -732,6 +732,7 @@ MonoBehaviour:
   normal: {fileID: 2100000, guid: 44ab0cc40b59345718856f6e1c1225f3, type: 2}
   maxLength: {fileID: 2100000, guid: 7c3cbb7d74f28df4bab9df36d9e10069, type: 2}
   ropeMesh: {fileID: 5120218468765113212}
+  particleCollideChecks: []
 --- !u!1 &3594766738110799708
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,9 +742,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3414623212541491820}
+  - component: {fileID: 7358898820763729625}
   m_Layer: 0
   m_Name: CenterTail
-  m_TagString: Untagged
+  m_TagString: Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -763,6 +765,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3324044872041184073}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &7358898820763729625
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3594766738110799708}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.82
+  m_Height: 13.698641
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.628232, z: 9.341397e-17}
 --- !u!1 &3863471122080879814
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,7 +804,7 @@ GameObject:
   - component: {fileID: 4950932171113037863}
   m_Layer: 0
   m_Name: Tail
-  m_TagString: Point
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -950,9 +975,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5508470002078646449}
+  - component: {fileID: 9106518459513702806}
   m_Layer: 0
   m_Name: CenterHead
-  m_TagString: Untagged
+  m_TagString: Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -972,6 +998,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7443900440728636654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &9106518459513702806
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6594368250009819241}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.82
+  m_Height: 13.698641
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.628232, z: 9.341397e-17}
 --- !u!1 &7470299600176483533
 GameObject:
   m_ObjectHideFlags: 0

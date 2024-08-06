@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1371554697846873804}
-  - component: {fileID: 8253407193369276175}
   - component: {fileID: 6821531954145927300}
   - component: {fileID: 7517463610715794770}
+  - component: {fileID: 4062945383297883108}
   m_Layer: 7
   m_Name: ParticleCollide
   m_TagString: Untagged
@@ -34,27 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8253407193369276175
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8246786749645495763}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.05, y: 0.05, z: 2.03}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6821531954145927300
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -94,3 +73,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34536dd2d1039ae48be04d63e95a9b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 
+  layerCollide:
+    serializedVersion: 2
+    m_Bits: 128
+  range: 0.2
+--- !u!65 &4062945383297883108
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8246786749645495763}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

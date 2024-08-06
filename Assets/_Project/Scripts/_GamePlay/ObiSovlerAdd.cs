@@ -42,7 +42,7 @@ public class ObiSovlerAdd : MonoBehaviour
             var getParticle = colliderObject.GetComponent<ParticleCollideCheck>();
             getParticle.Init( _guid.ToString());
             getParticle.transform.SetParent(rope.transform);
-           getRope.particleCollideChecks.Add(getParticle);
+            getRope.particleCollideChecks.Add(getParticle);
             // Store the collider object in a list for later use
             colliders.Add(getParticle.gameObject);
         }
@@ -52,15 +52,21 @@ public class ObiSovlerAdd : MonoBehaviour
 
     void UpdateColliders(ObiRope rope, List<GameObject> colliders)
     {
-        var blueprint = rope.blueprint;
-
-        for (int i = 0; i < blueprint.activeParticleCount; i++)
+        if (rope != null && rope.isActiveAndEnabled)  // Kiểm tra rope không null và đang active
         {
-            int solverIndex = rope.solverIndices[i];
-            Vector4 particlePosition = solver.positions[solverIndex];
+            var blueprint = rope.blueprint;
+            if (blueprint != null)
+            {
+                var solver = rope.solver;  // Lấy solver của rope
+                for (int i = 0; i < blueprint.activeParticleCount && i < colliders.Count; i++)
+                {
+                    int solverIndex = rope.solverIndices[i];
+                    Vector4 particlePosition = solver.positions[solverIndex];
 
-            // Update the position of each collider to match the corresponding particle
-            colliders[i].transform.position = solver.transform.TransformPoint(particlePosition);
+                    // Update the position of each collider to match the corresponding particle
+                    colliders[i].transform.position = solver.transform.TransformPoint(particlePosition);
+                }
+            }
         }
     }
 }

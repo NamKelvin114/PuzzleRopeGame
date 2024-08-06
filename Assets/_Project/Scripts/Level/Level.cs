@@ -14,7 +14,7 @@ public class Level : MonoBehaviour
     [SerializeField] private List<SetupRope> ropeList = new List<SetupRope>();
     [ReadOnly] [SerializeField] private SetupRope currentRope;
     [ReadOnly] [SerializeField] private List<Rope> ropes = new List<Rope>();
-   // [SerializeField] private ObiSolver obiSolver;
+    // [SerializeField] private ObiSolver obiSolver;
     private bool _updatePosi;
     private float _velocity;
     private Vector3 _previous;
@@ -22,7 +22,7 @@ public class Level : MonoBehaviour
     private bool _isFingerDown;
     private bool _isFingerDrag;
     private bool _isFingerUp;
-    private int _countRope;
+    private int _maxRope;
     private Point _previousPoint;
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
@@ -43,9 +43,7 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerUp += HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate += HandleFingerUpdate;
         Observer.RopeCheck += CheckCondition;
-        Observer.DoneMove += CheckRopeCollide;
         Observer.MaxLength += MaxCondition;
-       // obiSolver.OnCollision += Solver_OnCollision;
     }
 
     void OnDisable()
@@ -54,15 +52,13 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerUp -= HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate -= HandleFingerUpdate;
         Observer.RopeCheck -= CheckCondition;
-        Observer.DoneMove -= CheckRopeCollide;
         Observer.MaxLength -= MaxCondition;
-       // obiSolver.OnCollision-= Solver_OnCollision;
 
     }
-   
+
     private void Start()
     {
-        _countRope = ropeList.Count;
+        _maxRope = ropeList.Count;
     }
     void MaxCondition()
     {
@@ -85,47 +81,48 @@ public class Level : MonoBehaviour
         {
             _isFingerUp = true;
             var ray = finger.GetRay(Camera);
-            var hit = default(RaycastHit);
-
-            if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
-            {
-                if (hit.collider.gameObject.CompareTag(Constant.Point))
-                {
-                    var checkPoint = hit.collider.gameObject.GetComponent<Point>();
-                    if (checkPoint.canTouch)
-                    {
-                        StopUpdateRope();
-                        ropes.Clear();
-                        selectPoint = checkPoint;
-                        selectPoint.ePointState = EPointState.Move;
-                        _previousPoint = selectPoint;
-                        Vector3 fingerPos = finger.GetWorldPosition(-camera.transform.position.z, camera);
-                        _previous = fingerPos;
-                        foreach (var rope in ropeList)
-                        {
-                            var r = rope.rope.GetComponent<MeshCollider>();
-                            if (r != null)
-                            {
-                                Destroy(r);
-                            }
-                            rope.tailOfRope.CancelReset();
-                            rope.headOfRope.CancelReset();
-                            if (rope.headOfRope == selectPoint)
-                            {
-                                selectPoint.SetCenter(rope.tailOfRope.transform.position);
-                                SetCurrentRope(rope);
-                            }
-                            else if (rope.tailOfRope == selectPoint)
-                            {
-                                selectPoint.SetCenter(rope.headOfRope.transform.position);
-                                SetCurrentRope(rope);
-                            }
-                        }
-                        _isFingerDrag = true;
-                        _updatePosi = true;
-                    }
-                }
-            }
+           // var hit = default(RaycastHit);
+           RaycastHit[] hit = Physics.RaycastAll(ray, float.PositiveInfinity);
+           foreach (var hitCheck in hit)
+           {
+               if (hitCheck.collider.gameObject.CompareTag(Constant.Point))
+               {
+                   var checkPoint = hitCheck.collider.gameObject.GetComponentInParent<Point>();
+                   if (checkPoint.canTouch)
+                   {
+                       StopUpdateRope();
+                       ropes.Clear();
+                       selectPoint = checkPoint;
+                       selectPoint.ePointState = EPointState.Move;
+                       _previousPoint = selectPoint;
+                       Vector3 fingerPos = finger.GetWorldPosition(-camera.transform.position.z, camera);
+                       _previous = fingerPos;
+                       foreach (var rope in ropeList)
+                       {
+                           var r = rope.rope.GetComponent<MeshCollider>();
+                           if (r != null)
+                           {
+                               Destroy(r);
+                           }
+                           rope.tailOfRope.CancelReset();
+                           rope.headOfRope.CancelReset();
+                           if (rope.headOfRope == selectPoint)
+                           {
+                               selectPoint.SetCenter(rope.tailOfRope.transform.position);
+                               SetCurrentRope(rope);
+                           }
+                           else if (rope.tailOfRope == selectPoint)
+                           {
+                               selectPoint.SetCenter(rope.headOfRope.transform.position);
+                               SetCurrentRope(rope);
+                           }
+                       }
+                       _isFingerDrag = true;
+                       _updatePosi = true;
+                   }
+               }
+           }
+           
         }
     }
     void SetCurrentRope(SetupRope setupRope)
@@ -197,61 +194,40 @@ public class Level : MonoBehaviour
             selectPoint = null;
         }
     }
-    void CheckRopeCollide()
-    {
-        _previousPoint = selectPoint;
-        foreach (var rope in ropeList)
-        {
-            if (rope.rope.GetComponent<Rope>().isDone == false && rope.rope.gameObject.GetComponent<MeshCollider>() == null)
-            {
-                var b = rope.rope.gameObject.AddComponent<MeshCollider>();
-                b.convex = true;
-                b.isTrigger = true;
-            }
-        }
-    }
+    
     void CheckCondition(Rope rope)
     {
         if (!ropes.Contains(rope))
         {
             ropes.Add(rope);
-            if (ropes.Count == _countRope)
+            if (ropes.Count == _maxRope)
             {
                 int count = 0;
-                foreach (var arope in ropes)
+
+                foreach (var ropelist in ropeList)
                 {
-                    if (arope.iscollide == false)
+                    var r = ropelist.rope.GetComponent<Rope>();
+                    if (!r.iscollide)
                     {
-                        foreach (var ropelist in ropeList)
+                        ropelist.rope.stretchingScale = 0;
+                        r.isDone = true;
+                        ropelist.headOfRope.transform.DOMove(ropelist.tailOfRope.transform.position, 1).OnComplete(() =>
                         {
-                            var r = ropelist.rope.GetComponent<Rope>();
-                            if (r == arope)
-                            {
-                                ropelist.rope.stretchingScale = 0;
-                                r.isDone = true;
-                                ropelist.headOfRope.transform.DOMove(ropelist.tailOfRope.transform.position, 1).OnComplete(() =>
-                                {
-                                    ropelist.rope.transform.parent.gameObject.SetActive(false);
-                                });
-                                ropelist.headOfRope.canTouch = false;
-                                ResetSlot(ropelist.headOfRope.slotSelect);
-                                ropelist.tailOfRope.canTouch = false;
-                                ResetSlot(ropelist.tailOfRope.slotSelect);
-                                _countRope--;
-                                count++;
-                            }
-                        }
+                            ropelist.rope.transform.parent.gameObject.SetActive(false);
+                        });
+                        ropelist.headOfRope.canTouch = false;
+                        ResetSlot(ropelist.headOfRope.slotSelect);
+                        ropelist.tailOfRope.canTouch = false;
+                        ResetSlot(ropelist.tailOfRope.slotSelect);
+                        _maxRope--;
+                        count++;
                     }
                 }
                 if (count == ropes.Count)
                 {
                     OnWin();
                 }
-                foreach (var brope in ropes)
-                {
-                    Destroy(brope.gameObject.GetComponent<MeshCollider>());
-                    brope.iscollide = false;
-                }
+                ropes.Clear();
             }
         }
     }
