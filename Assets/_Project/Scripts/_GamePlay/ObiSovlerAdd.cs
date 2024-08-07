@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Obi;
+using Pancake;
 
 public class ObiSovlerAdd : MonoBehaviour
 {
@@ -21,7 +22,6 @@ public class ObiSovlerAdd : MonoBehaviour
             }
         }
     }
-
     void Update()
     {
         foreach (var entry in ropeColliders)
@@ -35,29 +35,31 @@ public class ObiSovlerAdd : MonoBehaviour
         var blueprint = rope.blueprint;
         List<GameObject> colliders = new List<GameObject>();
         var getRope = rope.GetComponent<Rope>();
+        getRope.particleCollideChecks.Clear();
         for (int i = 0; i < blueprint.activeParticleCount; i++)
         {
             // Instantiate a collider from the prefab
             GameObject colliderObject = Instantiate(colliderPrefab);
             var getParticle = colliderObject.GetComponent<ParticleCollideCheck>();
-            getParticle.Init( _guid.ToString());
+            getParticle.Init(_guid.ToString());
             getParticle.transform.SetParent(rope.transform);
             getRope.particleCollideChecks.Add(getParticle);
             // Store the collider object in a list for later use
             colliders.Add(getParticle.gameObject);
         }
+
         ropeColliders.Add(rope, colliders);
-        UpdateColliders(rope,colliders);
+        UpdateColliders(rope, colliders);
     }
 
     void UpdateColliders(ObiRope rope, List<GameObject> colliders)
     {
-        if (rope != null && rope.isActiveAndEnabled)  // Kiểm tra rope không null và đang active
+        if (rope != null && rope.isActiveAndEnabled) // Kiểm tra rope không null và đang active
         {
             var blueprint = rope.blueprint;
             if (blueprint != null)
             {
-                var solver = rope.solver;  // Lấy solver của rope
+                var solver = rope.solver; // Lấy solver của rope
                 for (int i = 0; i < blueprint.activeParticleCount && i < colliders.Count; i++)
                 {
                     int solverIndex = rope.solverIndices[i];

@@ -56,15 +56,21 @@ MonoBehaviour:
     headOfRope: {fileID: 7289795745324500090}
     tailOfRope: {fileID: 2921167347446528950}
     Length: 6
+    isHaveKey: 0
+    keyItem: {fileID: 0}
   - rope: {fileID: 3329774466368089299}
     headOfRope: {fileID: 3952375969991278963}
     tailOfRope: {fileID: 8897201516417613503}
     Length: 6
+    isHaveKey: 0
+    keyItem: {fileID: 0}
   currentRope:
     rope: {fileID: 0}
     headOfRope: {fileID: 0}
     tailOfRope: {fileID: 0}
     Length: 0
+    isHaveKey: 0
+    keyItem: {fileID: 0}
   ropes: []
 --- !u!114 &4882952604402337022
 MonoBehaviour:
